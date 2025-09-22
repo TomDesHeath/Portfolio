@@ -1,0 +1,17 @@
+image: node:18
+
+pages:
+  stage: deploy
+  cache:
+    paths:
+      - node_modules/
+  script:
+    - npm ci
+    - npm run build
+    # GitLab Pages serves the 'public' artifact; move dist there
+    - mv dist public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main   # or 'master' if that’s your default branch
